@@ -19,13 +19,13 @@
 - pnpm tauri build --debug --bundles app 成功生成 src-tauri/target/debug/bundle/macos/gulu.app；已读出打包 Info.plist 的 LSUIElement=true、Identifier=com.zhuoru.gulu、版本 0.1.0。
 - 图标文件为 RGBA 36×36，有透明背景和非空 alpha 区域。
 - 使用原生自动化绑定打包应用时工具超时，无法独立确认菜单栏实际显示或深浅色效果；不把编译/打包成功记成 UI 实测。绑定操作可能已启动应用，未重复启动。
-- 退出菜单改动后 cargo fmt --check、cargo check --offline、CARGO_NET_OFFLINE=true pnpm tauri build --debug --bundles app 通过。未独立实测点击退出；不重复使用此前长时间超时的原生绑定验证。
-- 未添加镜像实现的单元测试；菜单行为通过类型检查、打包和官方/本机 API 核对验证，UI 实测仍未确认。
+- 退出菜单改动后 cargo fmt --check、cargo check --offline、CARGO_NET_OFFLINE=true pnpm tauri build --debug --bundles app 通过。重启最新开发进程后，用户确认能看到退出菜单；选择退出后的进程结束行为尚未实测。不重复使用此前长时间超时的原生绑定验证。
+- 未添加镜像实现的单元测试；已有类型检查、打包、官方/本机 API 核对，以及用户对菜单可见性的确认。
 
 ## 本轮运行排查（2026-10-12）
 - 用户报告点击图标无反应。进程检查发现只有打包版 gulu 在运行，其启动时间 14:50:56 早于退出菜单源码修改时间 16:00:20；没有运行中的 tauri dev。判断为仍在运行原来的无菜单版本，构建新产物没有重新执行旧进程的 setup。
 - 已向这个确认属于项目的旧进程发送 SIGTERM，检查它退出后，以 CARGO_NET_OFFLINE=true pnpm tauri dev 启动当前源码；编译完成并运行 target/debug/gulu，进程检查确认新的开发进程已存在。
-- 最新进程已启动是已验证事实；菜单可见/点击退出仍待用户反馈，已询问。不能把进程存在当作点击行为已经实测。
+- 最新进程启动后，用户明确回复“能看到退出菜单”，确认点击无反应的问题已解决。选择退出后的实际结束行为未确认，不把菜单可见当作已经点击退出。
 - 后续排查先确认实际运行的可执行文件和启动时间，再判断是否是代码问题；不要只根据磁盘产物更新时间认定用户运行的已是新版。
 
 ## 图标表现能力（已核对 API，效果未实施）

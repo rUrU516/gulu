@@ -21,5 +21,5 @@
 - 不使用 git reset 覆盖当前工作。后续改动按功能单独提交，保留可回看的版本。
 
 ## 检查
-- 当前退出菜单改动：cargo fmt --check、cargo check --offline、调试 .app 打包通过；菜单点击未独立实测，详见菜单栏 Context。
+- 当前退出菜单改动：cargo fmt --check、cargo check --offline、调试 .app 打包通过；用户已确认重启最新版后能看到退出菜单，实际选择退出的进程结束行为尚未确认，详见菜单栏 Context。
 - 旧计算器和手动提醒的验证属于历史，见对应历史 Context，不套用到当前菜单栏显示。
