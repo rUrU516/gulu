@@ -8,7 +8,7 @@
 - node_modules、dist、Rust target 和生成的 schemas 由 .gitignore 忽略，历史构建缓存仍可能存在，不属于当前源码或应用入口。
 
 ## 运行与构建
-- 在项目目录执行 pnpm tauri dev（或 pnpm dev）；点击菜单栏水滴打开菜单，选择“退出咕噜”请求停止应用。开发时也可使用终端 Ctrl+C 停止。
+- 在项目目录执行 pnpm tauri dev（或 pnpm dev）；点击菜单栏水滴打开菜单，选择“退出”请求停止应用，用户已确认这个退出动作成功。开发时也可使用终端 Ctrl+C 停止。
 - pnpm tauri build --debug --bundles app 生成本地调试 .app；2026-10-12 已构建成功。
 - 当前调试产物：src-tauri/target/debug/bundle/macos/gulu.app，运行验证限制见 [菜单栏 Context](context-menubar.md)。
 - 打包不会自动重启已经运行的 .app。2026-10-12 用户点击无反应时确认旧打包进程仍在运行，已停止旧版并启动当前 pnpm tauri dev。检查运行状态应读取真实进程；read_thread_terminal 本轮没有附加终端，不能据此判断应用没有运行。
@@ -21,5 +21,6 @@
 - 不使用 git reset 覆盖当前工作。后续改动按功能单独提交，保留可回看的版本。
 
 ## 检查
-- 当前退出菜单改动：cargo fmt --check、cargo check --offline、调试 .app 打包通过；用户已确认重启最新版后能看到退出菜单，实际选择退出的进程结束行为尚未确认，详见菜单栏 Context。
+- 当前退出菜单实现：cargo fmt --check、cargo check --offline、调试 .app 打包通过；用户已确认重启最新版后能看到退出菜单且选择后成功退出，详见菜单栏 Context。
+- 随后把菜单文字简化为“退出”，cargo fmt --check、git diff --check 通过；pnpm tauri dev 编译完成并启动 target/debug/gulu，进程检查确认运行。旧打包 .app 本轮没有重新生成，最新文字在开发进程中。
 - 旧计算器和手动提醒的验证属于历史，见对应历史 Context，不套用到当前菜单栏显示。

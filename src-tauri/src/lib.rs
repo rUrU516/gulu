@@ -11,7 +11,7 @@ pub fn run() {
             #[cfg(target_os = "macos")]
             app.set_activation_policy(tauri::ActivationPolicy::Accessory);
 
-            let quit = MenuItem::with_id(app, "quit", "退出咕噜", true, None::<&str>)?;
+            let quit = MenuItem::with_id(app, "quit", "退出", true, None::<&str>)?;
             let menu = Menu::with_items(app, &[&quit])?;
 
             // 点击菜单栏图标打开菜单；Tauri 保存图标直到应用退出。
