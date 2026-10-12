@@ -11,6 +11,7 @@
 - 在项目目录执行 pnpm tauri dev（或 pnpm dev）；点击菜单栏水滴打开菜单，选择“退出咕噜”请求停止应用。开发时也可使用终端 Ctrl+C 停止。
 - pnpm tauri build --debug --bundles app 生成本地调试 .app；2026-10-12 已构建成功。
 - 当前调试产物：src-tauri/target/debug/bundle/macos/gulu.app，运行验证限制见 [菜单栏 Context](context-menubar.md)。
+- 打包不会自动重启已经运行的 .app。2026-10-12 用户点击无反应时确认旧打包进程仍在运行，已停止旧版并启动当前 pnpm tauri dev。检查运行状态应读取真实进程；read_thread_terminal 本轮没有附加终端，不能据此判断应用没有运行。
 
 ## Git 版本管理
 - 2026-10-12 核实项目和父目录没有 Git 仓库后，在 gulu/ 初始化本地 Git，分支 main，使用用户已有 Git 身份配置。
