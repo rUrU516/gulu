@@ -1,7 +1,5 @@
-# Tauri + Vanilla TS
+# 咕噜 / Gulu
 
-This template should help get you started developing with Tauri in vanilla HTML, CSS and Typescript.
+Rust + Tauri 的极简 macOS 菜单栏应用。
 
-## Recommended IDE Setup
-
-- [VS Code](https://code.visualstudio.com/) + [Tauri](https://marketplace.visualstudio.com/items?itemName=tauri-apps.tauri-vscode) + [rust-analyzer](https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer)
+项目说明、运行方式与版本记录见 [agent-context/index.md](agent-context/index.md)。

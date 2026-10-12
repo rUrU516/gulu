@@ -3,24 +3,9 @@
   "productName": "gulu",
   "version": "0.1.0",
   "identifier": "com.zhuoru.gulu",
-  "build": {
-    "beforeDevCommand": "pnpm dev",
-    "devUrl": "http://localhost:1420",
-    "beforeBuildCommand": "pnpm build",
-    "frontendDist": "../dist"
-  },
+  "build": {},
   "app": {
-    "withGlobalTauri": true,
-    "windows": [
-      {
-        "title": "咕噜",
-        "width": 360,
-        "height": 340
-      }
-    ],
-    "security": {
-      "csp": null
-    }
+    "windows": []
   },
   "bundle": {
     "active": true,
@@ -31,6 +16,9 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "macOS": {
+      "infoPlist": "Info.plist"
+    }
   }
 }

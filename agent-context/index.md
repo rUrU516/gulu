@@ -2,28 +2,22 @@
 
 开始任务或恢复上下文时，先读本文件，再按任务读取关联 Context。
 
-## 已验证事实
-- 用户在 2026-10-09 使用官方 create-tauri-app 交互式脚手架创建项目，生成文件已检查。
-- 项目目录为 /Users/zhuoru/Documents/Codex/2026-10-09/w/gulu。
-- 原产品第一版只做 macOS 喝水提醒。2026-10-10 已完成第一小步：主页面按钮调用 Rust 弹出手动喝水提醒窗口，支持关闭；自动计时和菜单栏仍未实现。原计算器练习保留在 calculator.html 及原 Rust 模块中。
+## 当前范围（用户明确要求，2026-10-12）
+- 只做一个常驻 macOS 顶部菜单栏的小图标，点击没有动作。
+- 不创建窗口；没有提醒、计时、通知、记录、菜单或其他功能。
+- 名称 gulu / 咕噜，Identifier 为 com.zhuoru.gulu。
+- 当前实现是 Rust + Tauri 原生启动代码；无需前端页面或 Vite。
+- 用户要求做好版本管理：项目已初始化本地 Git，旧计算器/手动提醒代码保存在 learning-baseline。
 
-## 已确认决策
-- 英文项目名 gulu，中文显示名咕噜，Identifier 为 com.zhuoru.gulu。
-- 技术栈为 Tauri 2 + Vanilla + TypeScript，使用 pnpm 管理前端和开发工具，Cargo 管理 Rust 依赖。
-- 用户希望一步一步学习，创建项目、安装依赖、首次启动等重要步骤由用户亲自操作，助手负责解释与检查。
-- 用户自述 TypeScript 和 Rust 都处于比较基础的水平；要求多沟通、实时记录学习进展，只讲当前阶段需要理解的内容。教学前先读取学习 Context。
-- 当前计算器输入限定为数字、四则运算、括号及必要控制键；用户明确要求界面不出现滚动条。
-
-## 全局约束
+## 工作约束
 - 默认中文；不确定的信息必须查证或询问，不能臆断。
-- 从第一性原理出发，保持简单，避免未经用户请求的功能或限制。
-- 区分事实、决策、计划、假设和待验证结论。
-- 叙事性资料统一维护在 agent-context/；按需更新，不复制源码或完整日志。
+- 保持小步推进，不自行扩展功能。用户的 TypeScript/Rust 基础较初步，按当前代码逐点解释。
+- 叙事性资料维护在 agent-context/；明确区分已验证事实、决定、计划和待验证结论。
 
 ## 路由
-- [学习进展与沟通方式](context-learning.md)：用户自述基础、已确认理解、当前疑问和教学粒度。
-- [喝水提醒第一步](context-reminder.md)：手动提醒窗口、调用链、验证结果和下一步。
-- [计算器学习练习](context-calculator.md)：当前实现范围、核心代码位置、验证与限制。
-- [开发与运行](context-development.md)：实际脚手架结构、环境、启动流程、当前进度。
-- [示例架构与通信](context-architecture.md)：已核对的启动链、Greet 链和各代码层职责。
-- [产品范围与形式](context-product.md)：用途、第一版范围、候选形态和待确定行为。
+- [菜单栏最小版本](context-menubar.md)：当前实现、验证与范围。
+- [开发与版本管理](context-development.md)：运行/构建命令、Git 标签与旧代码恢复。
+- [当前架构](context-architecture.md)：Rust/Tauri 启动链与图标生命周期。
+- [产品范围](context-product.md)：当前要求和被替换的方案。
+- [学习进展](context-learning.md)：用户偏好和历史教学进展。
+- [计算器历史](context-calculator.md)、[手动提醒历史](context-reminder.md)：保留学习背景，源码在 Git 标签中。
