@@ -1,14 +1,15 @@
-# 当前架构：只有菜单栏图标
+# 当前架构：菜单栏图标与退出菜单
 
 ## 已验证的代码路径
 - package.json 的 tauri/dev 脚本调用 Tauri CLI；没有前端开发服务器。
 - [main.rs](../src-tauri/src/main.rs:4) 调用 gulu_lib::run。
-- [lib.rs](../src-tauri/src/lib.rs:4) 创建 Tauri Builder，在 setup 回调中设置 macOS 激活策略、创建菜单栏图标，然后 run 进入应用运行循环。
+- [lib.rs](../src-tauri/src/lib.rs:7) 创建 Tauri Builder，在 setup 回调中设置 macOS 激活策略、创建退出菜单并绑定菜单栏图标，然后 run 进入应用运行循环。
 - [tauri.conf.json](../src-tauri/tauri.conf.json) 的 windows 为空，应用启动不创建 WebView 窗口。
 - 仅原生核心运行：无前端、command、invoke、Mutex 状态、计时或提醒逻辑。
 
 ## 图标与生命周期
-- TrayIconBuilder::with_id("gulu") 创建一个图标，使用 include_image! 编译时载入 PNG，icon_as_template(true) 交给 macOS 着色；没有菜单/事件监听器。
+- TrayIconBuilder::with_id("gulu") 创建一个图标，使用 include_image! 编译时载入 PNG，icon_as_template(true) 交给 macOS 着色。
+- MenuItem::with_id 创建 quit 项，Menu::with_items 组成菜单，menu(&menu) 绑定到图标；on_menu_event 接收 AppHandle 和 MenuEvent，检查 quit ID 并调用 app.exit(0)。菜单事件经 Tauri 直接调用 Rust 闭包，没有前端通信。
 - 已核对本机 tauri-2.12.2/src/tray/mod.rs:421：build 注册图标时，在应用资源表保留克隆。setup 中的局部返回值结束后，图标仍由应用保存；无需另写状态容器。
 - Accessory 激活策略用于运行时隐藏 Dock，Info.plist 的 LSUIElement 用于打包启动的 agent 身份。
 

@@ -1,4 +1,7 @@
-use tauri::tray::TrayIconBuilder;
+use tauri::{
+    menu::{Menu, MenuItem},
+    tray::TrayIconBuilder,
+};
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -8,11 +11,21 @@ pub fn run() {
             #[cfg(target_os = "macos")]
             app.set_activation_policy(tauri::ActivationPolicy::Accessory);
 
-            // Tauri 保存这个图标，直到应用退出。当前没有菜单或点击行为。
+            let quit = MenuItem::with_id(app, "quit", "退出咕噜", true, None::<&str>)?;
+            let menu = Menu::with_items(app, &[&quit])?;
+
+            // 点击菜单栏图标打开菜单；Tauri 保存图标直到应用退出。
             TrayIconBuilder::with_id("gulu")
                 .icon(tauri::include_image!("icons/tray.png"))
                 .icon_as_template(true)
                 .tooltip("咕噜")
+                .menu(&menu)
+                .show_menu_on_left_click(true)
+                .on_menu_event(|app, event| {
+                    if event.id().as_ref() == "quit" {
+                        app.exit(0);
+                    }
+                })
                 .build(app)?;
 
             Ok(())
