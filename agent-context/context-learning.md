@@ -5,6 +5,7 @@
 - 计算器和手动提醒已移入 Git 历史 learning-baseline；下文指向旧项目源码的位置应在该标签中查看，标准库的本机源码引用仍独立存在。
 - 当前仅有 TrayIconBuilder 启动骨架。用户要求讲解这版代码；本轮按 main → Builder → setup → 图标 build → run 的顺序说明职责，重点区分 setup 注册启动回调、build 实际创建图标，以及 run 维持应用运行。
 - 本轮同时说明图标 ID、编译时嵌入 PNG、macOS 模板着色、Accessory 隐藏 Dock、? / Ok(()) 处理初始化结果和 windows 空配置；讲解依据为当前源码及本机 tauri-2.12.2 的 app.rs / tray/mod.rs。用户尚未反馈理解程度，不把讲解完成当成掌握；闭包、构建器或事件循环细节继续按提问展开。
+- 用户随后明确表示不太了解 Rust 闭包，要求单独讲解。当前从普通 fn 与 |参数| { 函数体 } 的对照、闭包存入变量后调用、访问外层局部变量的捕获能力讲起，再连接 lib.rs:6 的 setup：app 是 Tauri 传入的参数，这段闭包没有捕获外部局部变量；setup 接收并保存它以便启动时调用，参数类型由接口推断。依据：https://doc.rust-lang.org/book/ch13-01-closures.html 与当前源码。尚无用户理解反馈，Fn/FnMut/FnOnce、move 和捕获的所有权规则未展开。
 
 ## 用户明确自述与偏好（2026-10-09）
 - TypeScript 和 Rust 都只有比较基础的水平；不能因为能运行项目就假定熟悉框架、宏、构建器、IPC 或 Rust 所有权。
