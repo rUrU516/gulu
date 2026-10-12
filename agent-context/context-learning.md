@@ -6,6 +6,8 @@
 - 当前仅有 TrayIconBuilder 启动骨架。用户要求讲解这版代码；本轮按 main → Builder → setup → 图标 build → run 的顺序说明职责，重点区分 setup 注册启动回调、build 实际创建图标，以及 run 维持应用运行。
 - 本轮同时说明图标 ID、编译时嵌入 PNG、macOS 模板着色、Accessory 隐藏 Dock、? / Ok(()) 处理初始化结果和 windows 空配置；讲解依据为当前源码及本机 tauri-2.12.2 的 app.rs / tray/mod.rs。用户尚未反馈理解程度，不把讲解完成当成掌握；闭包、构建器或事件循环细节继续按提问展开。
 - 用户随后明确表示不太了解 Rust 闭包，要求单独讲解。当前从普通 fn 与 |参数| { 函数体 } 的对照、闭包存入变量后调用、访问外层局部变量的捕获能力讲起，再连接 lib.rs:6 的 setup：app 是 Tauri 传入的参数，这段闭包没有捕获外部局部变量；setup 接收并保存它以便启动时调用，参数类型由接口推断。依据：https://doc.rust-lang.org/book/ch13-01-closures.html 与当前源码。尚无用户理解反馈，Fn/FnMut/FnOnce、move 和捕获的所有权规则未展开。
+- 用户对闭包入门回应“大致明白了”，要求抛开 Tauri，单讲 Rust 所有权，并确认函数是否是可存储的对象。当前区分普通函数指针值与带捕获环境的闭包值，沿 String 的转移/借用解释闭包捕获：共享借用、可变借用、按值捕获；move 将 String 的所有权交给闭包，拥有 String 的闭包再赋给另一变量也会转移。说明 Copy 类型按值捕获会复制，move 不代表只能调用一次；不展开 Fn 系列 trait。用户对这些新内容的理解尚待反馈。
+- 本轮以临时 Rust 程序验证函数指针复制后两者均可调用、借用 String 的闭包与外部读取可共存、拥有 String 的闭包移交后可重复调用、i32 的 move 捕获保留外部值，以及使用已移走的 String/闭包会得到 E0382。临时目录已自动清理，未改应用源码。概念依据：Rust Book 所有权/借用/闭包/高级函数章节，以及 https://doc.rust-lang.org/reference/types/closure.html 中闭包类型近似包含捕获字段的 struct 的说明；不把概念模型当作固定内存布局。
 
 ## 用户明确自述与偏好（2026-10-09）
 - TypeScript 和 Rust 都只有比较基础的水平；不能因为能运行项目就假定熟悉框架、宏、构建器、IPC 或 Rust 所有权。
