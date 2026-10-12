@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/src/styles.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>咕噜计算器</title>
+    <script type="module" src="/src/main.ts" defer></script>
+  </head>
+  <body>
+    <main class="calculator" aria-label="咕噜计算器">
+      <section class="screen" aria-label="显示屏">
+        <div id="expression" class="expression" aria-label="表达式"></div>
+        <output id="display" class="display" aria-label="结果" aria-live="polite">0</output>
+        <p id="error" class="error" role="status"></p>
+      </section>
+
+      <div class="keypad" aria-label="计算器按键">
+        <button class="utility" data-key="clear" type="button" aria-label="全部清空">AC</button>
+        <button class="utility" data-key="(" type="button" aria-label="左括号">(</button>
+        <button class="utility" data-key=")" type="button" aria-label="右括号">)</button>
+        <button class="operator" data-key="/" type="button" aria-label="除">÷</button>
+
+        <button data-key="7" type="button">7</button>
+        <button data-key="8" type="button">8</button>
+        <button data-key="9" type="button">9</button>
+        <button class="operator" data-key="*" type="button" aria-label="乘">×</button>
+
+        <button data-key="4" type="button">4</button>
+        <button data-key="5" type="button">5</button>
+        <button data-key="6" type="button">6</button>
+        <button class="operator" data-key="-" type="button" aria-label="减">−</button>
+
+        <button data-key="1" type="button">1</button>
+        <button data-key="2" type="button">2</button>
+        <button data-key="3" type="button">3</button>
+        <button class="operator" data-key="+" type="button" aria-label="加">+</button>
+
+        <button class="utility backspace" data-key="backspace" type="button" aria-label="退格">⌫</button>
+        <button data-key="0" type="button">0</button>
+        <button data-key="." type="button" aria-label="小数点">.</button>
+        <button class="operator equals" data-key="equals" type="button" aria-label="等于">=</button>
+      </div>
+    </main>
+  </body>
+</html>
