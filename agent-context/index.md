@@ -10,6 +10,7 @@
 - 名称 gulu / 咕噜，Identifier 为 com.zhuoru.gulu。
 - 当前实现是 Rust + Tauri 菜单栏代码，加上 Rust 通过 objc2 调用 AppKit 原生窗口/图片/动画定时器；无需前端页面或 Vite。
 - 用户要求做好版本管理：项目已初始化本地 Git，旧计算器/手动提醒代码保存在 learning-baseline。
+- 用户要求打包分享给女朋友，主要面向 Apple 芯片；已生成 0.1.0 的 arm64 正式构建 DMG。本机无 Developer ID 分发证书，应用为 ad-hoc 本地签名，未 Apple 公证，首次打开可能需系统授权例外。
 
 ## 工作约束
 - 默认中文；不确定的信息必须查证或询问，不能臆断。
@@ -20,6 +21,7 @@
 - [菜单栏入口](context-menubar.md)：图标、菜单、运行排查与历史能力探查。
 - [水滴弹出动画](context-animation.md)：当前提醒效果、原位置接力、自动收回及验证。
 - [开发与版本管理](context-development.md)：运行/构建命令、Git 标签与旧代码恢复。
+- [打包与分发](context-distribution.md)：Apple 芯片安装包、构建与校验结果、签名条件和安装说明。
 - [当前架构](context-architecture.md)：Rust/Tauri 启动链与图标生命周期。
 - [产品范围](context-product.md)：当前要求和被替换的方案。
 - [学习进展](context-learning.md)：用户偏好和历史教学进展。
