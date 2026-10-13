@@ -19,7 +19,7 @@
 ## Git 版本管理
 - 2026-10-12 核实项目和父目录没有 Git 仓库后，在 gulu/ 初始化本地 Git，分支 main，使用用户已有 Git 身份配置。
 - 首个提交 38fdc30 保存计算器与手动提醒全部原始代码，标签 learning-baseline。
-- 纯图标版本提交 8766034 已创建标签 v0.1.0；后续教学记录和退出菜单作为独立提交保留，不移动该标签。不创建远端或推送。
+- 纯图标版本提交 8766034 已创建标签 v0.1.0；后续教学记录和退出菜单作为独立提交保留，不移动该标签。原先仅本地版本管理；用户现已要求 GitHub 同步与 Release，执行状态见 [更新 Context](context-updates.md)。
 - 查看旧代码而不改工作目录：git show learning-baseline:src-tauri/src/calculator.rs，或 git show learning-baseline:src-tauri/src/reminder.rs。
 - 不使用 git reset 覆盖当前工作。后续改动按功能单独提交，保留可回看的版本。
 

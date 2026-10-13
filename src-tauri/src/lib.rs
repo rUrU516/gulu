@@ -5,6 +5,8 @@ use tauri::{
 
 #[cfg(target_os = "macos")]
 mod reminder;
+#[cfg(target_os = "macos")]
+mod updates;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
@@ -18,7 +20,10 @@ pub fn run() {
             #[cfg(target_os = "macos")]
             let preview = MenuItem::with_id(app, "preview", "试试提醒", true, None::<&str>)?;
             #[cfg(target_os = "macos")]
-            let menu = Menu::with_items(app, &[&preview, &quit])?;
+            let check_updates =
+                MenuItem::with_id(app, "check_updates", "检查更新", true, None::<&str>)?;
+            #[cfg(target_os = "macos")]
+            let menu = Menu::with_items(app, &[&preview, &check_updates, &quit])?;
             #[cfg(not(target_os = "macos"))]
             let menu = Menu::with_items(app, &[&quit])?;
 
@@ -29,11 +34,17 @@ pub fn run() {
                 .tooltip("咕噜")
                 .menu(&menu)
                 .show_menu_on_left_click(true)
-                .on_menu_event(|app, event| {
+                .on_menu_event(move |app, event| {
                     #[cfg(target_os = "macos")]
                     if event.id().as_ref() == "preview" {
                         if let Err(error) = reminder::play(app) {
                             eprintln!("无法播放喝水提醒：{error}");
+                        }
+                    }
+                    #[cfg(target_os = "macos")]
+                    if event.id().as_ref() == "check_updates" {
+                        if let Err(error) = updates::check(app, &check_updates) {
+                            eprintln!("无法开始检查更新：{error}");
                         }
                     }
                     if event.id().as_ref() == "quit" {

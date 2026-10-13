@@ -1,6 +1,6 @@
 [package]
 name = "gulu"
-version = "0.1.0"
+version = "0.1.1"
 description = "Gulu menu bar app"
 authors = ["you"]
 edition = "2021"
@@ -21,10 +21,13 @@ tauri-build = { version = "2", features = [] }
 tauri = { version = "~2.12", features = ["tray-icon"] }
 
 [target.'cfg(target_os = "macos")'.dependencies]
+reqwest = { version = "0.13", default-features = false, features = ["json", "native-tls", "system-proxy"] }
+semver = "1"
+serde = { version = "1", features = ["derive"] }
 block2 = "0.6"
 objc2 = "0.6"
-objc2-app-kit = { version = "0.3", default-features = false, features = ["std", "NSAppearance", "NSButton", "NSCell", "NSColor", "NSControl", "NSFont", "NSImage", "NSImageView", "NSResponder", "NSScreen", "NSShadow", "NSStatusItem", "NSText", "NSTextField", "NSView", "NSWindow"] }
-objc2-foundation = { version = "0.3", default-features = false, features = ["std", "block2", "NSData", "NSDate", "NSGeometry", "NSString", "NSTimer"] }
+objc2-app-kit = { version = "0.3", default-features = false, features = ["std", "NSAlert", "NSApplication", "NSAppearance", "NSButton", "NSCell", "NSColor", "NSControl", "NSFont", "NSImage", "NSImageView", "NSResponder", "NSScreen", "NSShadow", "NSStatusItem", "NSText", "NSTextField", "NSView", "NSWindow", "NSWorkspace"] }
+objc2-foundation = { version = "0.3", default-features = false, features = ["std", "block2", "NSData", "NSDate", "NSGeometry", "NSString", "NSTimer", "NSURL"] }
 
 
 # Read the optimization guideline for more details: https://tauri.app/concept/size/#cargo-configuration
