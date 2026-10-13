@@ -42,6 +42,9 @@ pub fn run() {
                 })
                 .build(app)?;
 
+            #[cfg(target_os = "macos")]
+            reminder::start_automatic(app.handle())?;
+
             Ok(())
         })
         .run(tauri::generate_context!())

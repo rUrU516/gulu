@@ -13,6 +13,7 @@ use tauri::{image::Image, tray::TrayIcon, AppHandle};
 const WIDTH: f64 = 220.0;
 const HEIGHT: f64 = 244.0;
 const DURATION: f64 = 4.8;
+const REMINDER_INTERVAL: f64 = 5.0 * 60.0;
 
 // AppKit 对象只留在主线程；这个状态只在一次动画播放期间存在。
 thread_local! {
@@ -111,7 +112,7 @@ pub fn play(app: &AppHandle) -> Result<(), Box<dyn std::error::Error>> {
         water.setShadow(Some(&water_shadow));
         content.addSubview(&water);
 
-        let label = NSTextField::labelWithString(&NSString::from_str("喝口水吧"), mtm);
+        let label = NSTextField::labelWithString(&NSString::from_str("记得喝水"), mtm);
         label.setAlignment(NSTextAlignment::Center);
         label.setFont(Some(&NSFont::systemFontOfSize(16.0)));
         label.setTextColor(Some(&NSColor::whiteColor()));
@@ -216,4 +217,21 @@ impl Animation {
 fn smooth(p: f64) -> f64 {
     let p = p.clamp(0.0, 1.0);
     p * p * (3.0 - 2.0 * p)
+}
+
+pub fn start_automatic(app: &AppHandle) -> Result<(), Box<dyn std::error::Error>> {
+    let _mtm = MainThreadMarker::new().ok_or("自动提醒必须在 macOS 主线程创建")?;
+    let app = app.clone();
+    let remind = RcBlock::new(move |_timer: NonNull<NSTimer>| {
+        eprintln!("自动喝水提醒触发");
+        if let Err(error) = play(&app) {
+            eprintln!("自动喝水提醒失败：{error}");
+        }
+    });
+    // SAFETY: AppHandle 可跨线程传递；定时器在主线程注册，run loop 会保留它。
+    unsafe {
+        NSTimer::scheduledTimerWithTimeInterval_repeats_block(REMINDER_INTERVAL, true, &remind)
+    };
+    eprintln!("已开启自动喝水提醒：每 {REMINDER_INTERVAL} 秒一次");
+    Ok(())
 }

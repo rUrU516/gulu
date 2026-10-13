@@ -10,7 +10,7 @@
 
 ## 运行与构建
 - 在项目目录执行 pnpm tauri dev（或 pnpm dev）；点击菜单栏水滴打开菜单，选择“退出”请求停止应用，用户已确认这个退出动作成功。开发时也可使用终端 Ctrl+C 停止。
-- 点击“试试提醒”播放一次约 4.8 秒的水滴动画；尚无自动提醒周期。
+- 每 5 分钟自动播放一次约 4.8 秒的水滴动画，显示“记得喝水”；启动后首次等待 5 分钟，点击“试试提醒”仍可立即手动播放。
 - pnpm tauri build --debug --bundles app 生成本地调试 .app；2026-10-12 已构建成功。
 - 当前调试产物：src-tauri/target/debug/bundle/macos/gulu.app，运行验证限制见 [菜单栏 Context](context-menubar.md)。
 - 打包不会自动重启已经运行的 .app。2026-10-12 用户点击无反应时确认旧打包进程仍在运行，已停止旧版并启动当前 pnpm tauri dev。检查运行状态应读取真实进程；read_thread_terminal 本轮没有附加终端，不能据此判断应用没有运行。
@@ -26,4 +26,5 @@
 - 当前退出菜单实现：cargo fmt --check、cargo check --offline、调试 .app 打包通过；用户已确认重启最新版后能看到退出菜单且选择后成功退出，详见菜单栏 Context。
 - 随后把菜单文字简化为“退出”，cargo fmt --check、git diff --check 通过；pnpm tauri dev 编译完成并启动 target/debug/gulu，进程检查确认运行。旧打包 .app 本轮没有重新生成，最新文字在开发进程中。
 - 动画版本 cargo check --offline、cargo fmt --check、git diff --check 通过；CARGO_NET_OFFLINE=true pnpm tauri build --debug --bundles app 成功生成新的调试 .app。用户确认动画出现并自动缩回，随后误退出；2026-10-13 已再次通过 pnpm tauri dev 启动，编译完成并由进程检查确认 target/debug/gulu 在运行。
+- 自动提醒以临时 10 秒间隔验证至少两次连续回调、播放和收回，cargo check --offline 通过；随后恢复为 300 秒，cargo fmt --check、git diff --check、调试 .app 打包通过。开发进程已重新启动，日志确认每 300 秒注册成功，进程检查确认运行。
 - 旧计算器和手动提醒的验证属于历史，见对应历史 Context，不套用到当前菜单栏显示。
