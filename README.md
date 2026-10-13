@@ -16,6 +16,6 @@ Rust + Tauri 的 macOS 菜单栏喝水提醒，面向 Apple 芯片 Mac。
 
 本机需有 Rust、macOS 开发工具和 pnpm。执行 `pnpm install`，再执行 `pnpm tauri dev`。
 
-发布时将 `package.json`、`src-tauri/Cargo.toml`、`src-tauri/tauri.conf.json` 的版本号保持一致，提交到 Git 后执行 `pnpm release`。脚本会构建并校验 Apple 芯片安装包，推送代码和版本标签，再上传并发布 GitHub Release。需要本机 `gh` 已登录，并已设置 Git 远端。
+发布时将 `package.json`、`src-tauri/Cargo.toml`、`src-tauri/tauri.conf.json` 的版本号保持一致，运行 `cargo check --manifest-path src-tauri/Cargo.toml` 同步锁定文件，再将改动提交到 Git，执行 `pnpm release`。脚本会构建并校验 Apple 芯片安装包，推送代码和版本标签，再上传并发布 GitHub Release。需要本机 `gh` 已登录，并已设置 Git 远端。
 
 架构、学习背景和详细版本记录见 [agent-context/index.md](agent-context/index.md)。

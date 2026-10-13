@@ -23,6 +23,7 @@
 - 仓库：https://github.com/rUrU516/gulu ，origin 为 https://github.com/rUrU516/gulu.git，main 跟踪 origin/main，历史 learning-baseline 与 v0.1.0 标签也已推送。
 - Release：https://github.com/rUrU516/gulu/releases/tag/v0.1.1 ，isDraft=false、isPrerelease=false，资产 gulu_0.1.1_aarch64.dmg 已上传，大小 2,194,804 字节，约 2.09 MiB。
 - 固定最新下载页面：https://github.com/rUrU516/gulu/releases/latest 。之后升版本、提交再执行 pnpm release，不覆盖已发布标签。
+- 升版本后先运行 cargo check --manifest-path src-tauri/Cargo.toml 同步 Cargo.lock，再提交所有版本/锁文件改动。发布脚本在构建前后都核实源码未留下未提交改动，保证标签与实际构建的锁文件一致；该辅助脚本完善不改变 0.1.1 应用产物。
 
 ## 已验证与待验证
 - 本地 cargo test --locked --lib：3 个版本判断测试通过；发布后单独执行 ignored 的 published_release_can_be_checked_without_github_login，真实 HTTPS 请求通过，模拟旧版本能识别更新，当前版本请求也成功。应用请求没有使用 GitHub 登录凭据。

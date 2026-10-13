@@ -49,6 +49,9 @@ run('pnpm', ['tauri', 'build', '--target', 'aarch64-apple-darwin', '--bundles', 
 });
 run('codesign', ['--verify', '--deep', '--strict', app]);
 run('hdiutil', ['verify', dmg]);
+if (read('git', ['status', '--porcelain'])) {
+  throw new Error('构建更新了源码或锁定文件，请提交这些改动后重新发布。');
+}
 mkdirSync(join(root, 'releases'), { recursive: true });
 copyFileSync(dmg, join(root, `releases/gulu-${version}-apple-silicon.dmg`));
 
