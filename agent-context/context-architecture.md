@@ -3,13 +3,13 @@
 ## 已验证的代码路径
 - package.json 的 tauri/dev 脚本调用 Tauri CLI；没有前端开发服务器。
 - [main.rs](../src-tauri/src/main.rs:4) 调用 gulu_lib::run。
-- [lib.rs](../src-tauri/src/lib.rs:10) 创建 Tauri Builder，在 setup 回调中设置 macOS 激活策略、创建“试试提醒”/“退出”菜单并绑定菜单栏图标，然后 run 进入应用运行循环。
+- [lib.rs](../src-tauri/src/lib.rs:12) 创建 Tauri Builder，在 setup 回调中设置 macOS 激活策略、创建“试试提醒”/“检查更新”/“退出”菜单并绑定菜单栏图标，然后 run 进入应用运行循环。
 - [tauri.conf.json](../src-tauri/tauri.conf.json) 的 windows 为空，应用启动不创建 WebView 窗口。
 - 仅原生核心运行：无前端、command、invoke 或 Mutex 状态。动画通过 Rust 的 objc2 绑定直接调用 AppKit；图标创建后 start_automatic 注册独立的 300 秒重复 NSTimer，自动回调复用 reminder::play。
 
 ## 图标与生命周期
 - TrayIconBuilder::with_id("gulu") 创建一个图标，使用 include_image! 编译时载入 PNG，icon_as_template(true) 交给 macOS 着色。
-- MenuItem::with_id 创建 preview/quit 项，Menu::with_items 组成菜单，menu(&menu) 绑定到图标；on_menu_event 接收 AppHandle 和 MenuEvent，检查 ID 并调用 reminder::play 或 app.exit(0)。菜单事件经 Tauri 直接调用 Rust 闭包，没有前端通信。
+- MenuItem::with_id 创建 preview/check_updates/quit 项，Menu::with_items 组成菜单，menu(&menu) 绑定到图标；on_menu_event 接收 AppHandle 和 MenuEvent，检查 ID 并调用提醒、更新检查或退出。菜单事件经 Tauri 直接调用 Rust 闭包，没有前端通信。
 - 已核对本机 tauri-2.12.2/src/tray/mod.rs:421：build 注册图标时，在应用资源表保留克隆。setup 中的局部返回值结束后，图标仍由应用保存；无需另写状态容器。
 - Accessory 激活策略用于运行时隐藏 Dock，Info.plist 的 LSUIElement 用于打包启动的 agent 身份。
 
@@ -21,6 +21,10 @@
 ## 历史教学
 - Calculator/State/Mutex、前后端通信和手动提醒窗口的代码保存在 Git 标签 learning-baseline，当前不再使用。
 - 用户对这些概念的理解与教学路线见 [学习 Context](context-learning.md)。
+
+## 检查更新职责
+- updates.rs 使用 Tauri async_runtime 在后台通过 reqwest 请求 GitHub 最新 Release；SemVer 判断是否有新版，再 run_on_main_thread 回到主线程显示 AppKit NSAlert，NSWorkspace 打开下载页面。
+- 更新检查与五分钟 NSTimer 独立，没有前端 IPC、后台轮询或应用内安装插件。公开发布与下载验证见 [更新 Context](context-updates.md)。
 
 ## 官方参考
 - 原生核心与 WebView 分工：https://v2.tauri.app/concept/process-model/ 。

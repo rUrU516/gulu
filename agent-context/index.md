@@ -11,7 +11,7 @@
 - 当前实现是 Rust + Tauri 菜单栏代码，加上 Rust 通过 objc2 调用 AppKit 原生窗口/图片/动画定时器；无需前端页面或 Vite。
 - 用户要求做好版本管理：项目已初始化本地 Git，旧计算器/手动提醒代码保存在 learning-baseline。
 - 用户要求打包分享给女朋友，主要面向 Apple 芯片；已生成 0.1.0 的 arm64 正式构建 DMG。本机无 Developer ID 分发证书，应用为 ad-hoc 本地签名，未 Apple 公证，首次打开可能需系统授权例外。
-- 最新要求“检查更新”与 GitHub Release：0.1.1 增加菜单检查并提供新版下载页面，已准备 pnpm release 本地发布命令；用户已确认公开仓库 rUrU516/gulu，正在执行同步与发布，详见更新 Context。
+- 最新要求“检查更新”与 GitHub Release：0.1.1 增加菜单检查并提供新版下载页面；用户确认的公开仓库 https://github.com/rUrU516/gulu 已同步并发布 v0.1.1。pnpm release 本地构建/校验/上传/发布已实际跑通，匿名下载与应用真实检查通过，详见更新 Context。
 
 ## 工作约束
 - 默认中文；不确定的信息必须查证或询问，不能臆断。

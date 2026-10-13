@@ -1,5 +1,12 @@
 # Apple 芯片版打包与分发
 
+## 当前可分发版本 0.1.1
+- 用户后来要求检查更新与 GitHub Release，并确认公开仓库 rUrU516/gulu；0.1.1 已成功发布：https://github.com/rUrU516/gulu/releases/tag/v0.1.1 。
+- 最新下载页面：https://github.com/rUrU516/gulu/releases/latest ，可直接分享这个固定入口。
+- 本地副本：[gulu-0.1.1-apple-silicon.dmg](../releases/gulu-0.1.1-apple-silicon.dmg)，大小 2,194,804 字节；SHA-256 为 24a44ddf1a6f07c62f47f8a196644bc70a3dd7dd74cb4cbea0f8df4028ff4bfb。
+- arm64、版本号、应用签名、DMG 完整性、匿名下载与本地文件一致性均已验证。仍为 ad-hoc 本地签名、未 Apple 公证。接收方先安装 0.1.1，才有“检查更新”菜单；当前入口是检查后打开新版下载页、退出旧应用并替换安装。
+- 后续发布命令及源码标签见 [检查更新与 GitHub 发布](context-updates.md)。下文 0.1.0 记录作为首次本地分发历史保留。
+
 ## 用户要求与决定
 - 2026-10-13 用户要求将当前每 5 分钟自动提醒的版本打包，方便分享给女朋友，并明确主要面向 Apple 芯片。
 - 只构建 aarch64-apple-darwin 的正式版本，保留当前图标、菜单和动画，不改变产品行为。
