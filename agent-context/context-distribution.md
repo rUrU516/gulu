@@ -1,6 +1,11 @@
 # Apple 芯片版打包与分发
 
-## 当前可分发版本 0.1.1
+## 当前可分发版本 0.1.2
+- 用户要求升级一个版本以测试更新；已发布：https://github.com/rUrU516/gulu/releases/tag/v0.1.2 ，仅更新版本号，功能与 0.1.1 一致。
+- 本地副本：[gulu-0.1.2-apple-silicon.dmg](../releases/gulu-0.1.2-apple-silicon.dmg)，大小 2,193,763 字节；SHA-256 为 05e043bc6c43f61e955c3ea185b187aa6654c8e87d809e7832383d9003e32580。arm64、版本、签名、DMG 完整性以及匿名下载文件一致性均已验证，仍为 ad-hoc 本地签名、未 Apple 公证。
+- 固定下载入口仍为 https://github.com/rUrU516/gulu/releases/latest ，后续发布流程与旧版本运行条件见 [更新 Context](context-updates.md)。当前为用户保留运行 0.1.1，以便测试发现 0.1.2；未启动新版覆盖这一验证条件。
+
+## 首次带更新检查的版本 0.1.1
 - 用户后来要求检查更新与 GitHub Release，并确认公开仓库 rUrU516/gulu；0.1.1 已成功发布：https://github.com/rUrU516/gulu/releases/tag/v0.1.1 。
 - 最新下载页面：https://github.com/rUrU516/gulu/releases/latest ，可直接分享这个固定入口。
 - 本地副本：[gulu-0.1.1-apple-silicon.dmg](../releases/gulu-0.1.1-apple-silicon.dmg)，大小 2,194,804 字节；SHA-256 为 24a44ddf1a6f07c62f47f8a196644bc70a3dd7dd74cb4cbea0f8df4028ff4bfb。

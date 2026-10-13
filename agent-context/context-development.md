@@ -15,6 +15,7 @@
 - 当前调试产物：src-tauri/target/debug/bundle/macos/gulu.app，运行验证限制见 [菜单栏 Context](context-menubar.md)。
 - 2026-10-13 已按用户要求生成 Apple 芯片正式构建 .app 与 .dmg，可分享文件为 releases/gulu-0.1.0-apple-silicon.dmg；命令、签名限制与校验结果见 [分发 Context](context-distribution.md)。构建未替换当前开发进程，也未重复启动安装包中的应用。
 - 随后 0.1.1 增加“检查更新”，已通过 pnpm release 成功发布到 GitHub；新本地包 releases/gulu-0.1.1-apple-silicon.dmg，正式下载入口与真实 HTTPS 校验见 [更新 Context](context-updates.md)。开发进程已自动重编译启动到 0.1.1；旧离线 watcher 依赖缺失退出问题已在下载依赖后重启解决。
+- 用户要求再升一个版本后，已发布 0.1.2（功能不变），本地包 releases/gulu-0.1.2-apple-silicon.dmg。此前开发进程已停止，当前运行的是独立保存的 src-tauri/target/update-test/gulu-0.1.1.app，便于用户测试旧版发现新版；此副本位于 Git 忽略的 target/，下一轮不要直接重启新版覆盖用户测试条件。
 - 打包不会自动重启已经运行的 .app。2026-10-12 用户点击无反应时确认旧打包进程仍在运行，已停止旧版并启动当前 pnpm tauri dev。检查运行状态应读取真实进程；read_thread_terminal 本轮没有附加终端，不能据此判断应用没有运行。
 
 ## Git 版本管理
@@ -24,6 +25,7 @@
 - 查看旧代码而不改工作目录：git show learning-baseline:src-tauri/src/calculator.rs，或 git show learning-baseline:src-tauri/src/reminder.rs。
 - 不使用 git reset 覆盖当前工作。后续改动按功能单独提交，保留可回看的版本。
 - 用户已确认公开仓库 rUrU516/gulu，origin 为 https://github.com/rUrU516/gulu.git，main 跟踪 origin/main。v0.1.1 对应 1c6ea6c；main 与 learning-baseline、v0.1.0、v0.1.1 标签已推送。发布脚本按单次 Git 命令使用 gh 凭据，没有修改全局 Git/SSH 配置。
+- v0.1.2 对应 81d0549，已推送并发布；该版本仅修改三个版本声明及 Cargo.lock。发布校验与真实匿名更新请求通过，详细证据见更新 Context。
 
 ## 检查
 - 当前退出菜单实现：cargo fmt --check、cargo check --offline、调试 .app 打包通过；用户已确认重启最新版后能看到退出菜单且选择后成功退出，详见菜单栏 Context。
