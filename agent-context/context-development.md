@@ -5,10 +5,12 @@
 - Rust 包 gulu，库 gulu_lib；本机检查使用 tauri 2.12.2、tray-icon 0.25.1。CLI 锁定版本保持原项目安装值。
 - package.json 只保留 Tauri CLI，dev/build 分别调用 tauri dev/tauri build，另保留 tauri 脚本。
 - 当前版本无需 TypeScript、Vite、WebView 页面或前端开发服务器。
+- 水滴弹出动画增加 macOS 专属 objc2 0.6 / objc2-app-kit、objc2-foundation 0.3 / block2 0.6 直接依赖，复用已有锁定版本。使用 with_inner_tray_icon 接触底层图标，按 Tauri API 文档把版本范围限制到 ~2.12，锁定仍为 2.12.2。
 - node_modules、dist、Rust target 和生成的 schemas 由 .gitignore 忽略，历史构建缓存仍可能存在，不属于当前源码或应用入口。
 
 ## 运行与构建
 - 在项目目录执行 pnpm tauri dev（或 pnpm dev）；点击菜单栏水滴打开菜单，选择“退出”请求停止应用，用户已确认这个退出动作成功。开发时也可使用终端 Ctrl+C 停止。
+- 点击“试试提醒”播放一次约 4.8 秒的水滴动画；尚无自动提醒周期。
 - pnpm tauri build --debug --bundles app 生成本地调试 .app；2026-10-12 已构建成功。
 - 当前调试产物：src-tauri/target/debug/bundle/macos/gulu.app，运行验证限制见 [菜单栏 Context](context-menubar.md)。
 - 打包不会自动重启已经运行的 .app。2026-10-12 用户点击无反应时确认旧打包进程仍在运行，已停止旧版并启动当前 pnpm tauri dev。检查运行状态应读取真实进程；read_thread_terminal 本轮没有附加终端，不能据此判断应用没有运行。
@@ -23,4 +25,5 @@
 ## 检查
 - 当前退出菜单实现：cargo fmt --check、cargo check --offline、调试 .app 打包通过；用户已确认重启最新版后能看到退出菜单且选择后成功退出，详见菜单栏 Context。
 - 随后把菜单文字简化为“退出”，cargo fmt --check、git diff --check 通过；pnpm tauri dev 编译完成并启动 target/debug/gulu，进程检查确认运行。旧打包 .app 本轮没有重新生成，最新文字在开发进程中。
+- 动画版本 cargo check --offline、cargo fmt --check、git diff --check 通过；CARGO_NET_OFFLINE=true pnpm tauri build --debug --bundles app 成功生成新的调试 .app。用户确认动画出现并自动缩回，随后误退出；2026-10-13 已再次通过 pnpm tauri dev 启动，编译完成并由进程检查确认 target/debug/gulu 在运行。
 - 旧计算器和手动提醒的验证属于历史，见对应历史 Context，不套用到当前菜单栏显示。
